@@ -22,6 +22,6 @@ from stock import views as stock_views
 urlpatterns = [
     path('admin/', admin.site.urls),
     url('^$', stock_views.home),
-    path('data_volumebyprice/<slug:timeslot>/<slug:ticker>/<slug:increment>/', stock_views.get_volumeby_price),
+    path('data_volumebyprice/<slug:timestart>/<slug:timeend>/<slug:ticker>/<slug:increment>/', stock_views.get_volumeby_price),
     path('data_tickers', stock_views.get_tickers),
 ]

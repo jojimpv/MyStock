@@ -31,7 +31,7 @@ with open(STOCK_DATA_PATH) as stock_data_csv:
 
 
 def home(request):
-    return render(request, 'stock_index.html')
+    return render(request, 'index.html')
 
 
 def get_tickers(request):
@@ -43,13 +43,13 @@ def get_tickers(request):
                              msg=message))
 
 
-def get_volumeby_price(request, timeslot, ticker, increment):
-    logger.debug('timeslot = {0}'.format(timeslot))
+def get_volumeby_price(request, timestart, timeend, ticker, increment):
+    logger.debug('timeslot = {0} {1}'.format(timestart, timeend))
     logger.debug('ticker = {0}'.format(ticker))
     increment = float(increment.replace('_','.'))
     logger.debug('increment = {0}'.format(increment))
-    time_start = time.strftime('%H:%M:%S.0', time.gmtime(int(timeslot.split('-')[0])))
-    time_end = time.strftime('%H:%M:%S.0', time.gmtime(int(timeslot.split('-')[1])))
+    time_start = '{0:02d}:{1:02d}.{2:01d}'.format(*map(int,timestart.split('_')))
+    time_end = '{0:02d}:{1:02d}.{2:01d}'.format(*map(int,timeend.split('_')))
     logger.debug('time_slot = {0} - {1}'.format(time_start, time_end))
     stock_rec_filtered = []
     price_vol_map = defaultdict(int)
@@ -57,7 +57,7 @@ def get_volumeby_price(request, timeslot, ticker, increment):
         if row_num == 0:
             continue
         rec = StockRec(*row)
-        if rec.ticker == ticker and rec.time >= time_start and rec.time < time_end:
+        if rec.ticker == ticker and (rec.time >= time_start and rec.time < time_end):
             stock_rec_filtered.append(rec)
     for rec in stock_rec_filtered:
         price_key = '{0:.2f}'.format(increment * round(float(rec.price)/increment))

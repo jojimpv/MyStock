@@ -1,0 +1,50 @@
+<html lang="en" >
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Angular Material style sheet -->
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.css">
+</head>
+{% verbatim %}
+<body ng-app="stockDemoApp" ng-controller="stockDemoCtrl" ng-cloak>
+
+    <md-toolbar class="md-hue-2">
+      <div class="md-toolbar-tools">
+        <div style="margin-right: 15px;">
+          <label for="ticker_combo">Ticker</label>
+          <select id=ticker_combo ng-model="tickerName" ng-change="change_ticker()" ng-options="x for x in ticker_names"></select>
+        </div>
+        <div style="margin-right: 15px;">
+          <label for="time_start">Time</label>
+          <input size=7 maxlength=7 style="width:75px" id=time_start ng-model="sliderTimeStart" ng-blur="change_ticker()" />
+          <label for="time_end"><strong>-</strong></label>
+          <input size=7 maxlength=7 style="width:75px" id=time_end ng-model="sliderTimeEnd" ng-blur="change_ticker()" />
+        </div>
+        <div>
+          <label for="increment_slider">Incement</label>
+          <input style="width:60px" id=increment_slider type="number" required min=".01" max="1" step=".01" ng-change="change_ticker()" ng-model="sliderIncrement" />
+        </div>
+      </div>
+    </md-toolbar>
+
+    <md-content>
+        <div style="height:20px;">
+            <span style="background-color:silver; color: white; padding: 3px;" ng-show="loading" class="loading">Loading...</span>
+        </div>
+      <div id="graph_container"></div>
+    </md-content>
+  <!-- Libraries -->
+
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-animate.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-aria.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-messages.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.js"></script>
+  <script src="/static/js/highcharts.js"></script>
+
+  <!-- Your application bootstrap  -->
+  <script src="/static/js/app.js"></script>
+  
+</body>
+{% endverbatim %}
+</html>
+
