@@ -5,7 +5,6 @@ from collections import namedtuple, defaultdict
 import logging
 import csv
 import os
-import time
 
 
 logger = logging.getLogger(__name__)
@@ -57,12 +56,13 @@ def get_volumeby_price(request, timestart, timeend, ticker, increment):
         if row_num == 0:
             continue
         rec = StockRec(*row)
-        if rec.ticker == ticker and (rec.time >= time_start and rec.time < time_end):
+        if rec.ticker == ticker and time_start <= rec.time < time_end:
             stock_rec_filtered.append(rec)
     for rec in stock_rec_filtered:
         price_key = '{0:.2f}'.format(increment * round(float(rec.price)/increment))
         price_vol_map[price_key] += float(rec.size)
-    result = dict(prices=list(price_vol_map.keys()), volume=list(price_vol_map.values()))
+    price_vol_list = sorted([(k, v) for k, v in price_vol_map.items()], key=lambda x: x[0], reverse=True)
+    result = dict(prices=[i[0] for i in price_vol_list], volume=[i[1] for i in price_vol_list])
     message = 'OK'
     return JsonResponse(dict(status='Success',
                              result=result,
