@@ -45,10 +45,10 @@ def get_tickers(request):
 def get_volumeby_price(request, timestart, timeend, ticker, increment):
     logger.debug('timeslot = {0} {1}'.format(timestart, timeend))
     logger.debug('ticker = {0}'.format(ticker))
-    increment = float(increment.replace('_','.'))
+    increment = float(increment.replace('_', '.'))
     logger.debug('increment = {0}'.format(increment))
-    time_start = '{0:02d}:{1:02d}.{2:01d}'.format(*map(int,timestart.split('_')))
-    time_end = '{0:02d}:{1:02d}.{2:01d}'.format(*map(int,timeend.split('_')))
+    time_start = '{0:02d}:{1:02d}:{1:02d}.{2:01d}'.format(*map(int,timestart.split('_')))
+    time_end = '{0:02d}:{1:02d}:{1:02d}.{2:01d}'.format(*map(int,timeend.split('_')))
     logger.debug('time_slot = {0} - {1}'.format(time_start, time_end))
     stock_rec_filtered = []
     price_vol_map = defaultdict(int)

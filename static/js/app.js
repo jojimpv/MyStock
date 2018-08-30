@@ -3,8 +3,8 @@ app.controller('stockDemoCtrl', function($scope, $log, $http) {
 
     $scope.tickerName = ''
     $scope.sliderIncrement = .01
-    $scope.sliderTimeStart = '09:30.0'
-    $scope.sliderTimeEnd = '12:00.0'
+    $scope.sliderTimeStart = '09:30:00.0'
+    $scope.sliderTimeEnd = '12:00:00.0'
 
     $scope.getTS = function(ts){
         var tstxt;
@@ -36,7 +36,7 @@ app.controller('stockDemoCtrl', function($scope, $log, $http) {
         $scope.loading = true;
 
         data_url_base = "/data_volumebyprice"
-        data_param = String($scope.sliderTimeStart).replace('.','_').replace(':','_') + '/' + String($scope.sliderTimeEnd).replace('.','_').replace(':','_') + '/' + $scope.tickerName + '/' + String($scope.sliderIncrement).replace('.','_')
+        data_param = String($scope.sliderTimeStart).replace('.','_').replace(/:/g,'_') + '/' + String($scope.sliderTimeEnd).replace('.','_').replace(/:/g,'_') + '/' + $scope.tickerName + '/' + String($scope.sliderIncrement).replace('.','_')
         data_url = data_url_base + '/' + data_param
         $http.get(data_url).then(function(response) {
             $scope.volume = response.data.result.volume;
